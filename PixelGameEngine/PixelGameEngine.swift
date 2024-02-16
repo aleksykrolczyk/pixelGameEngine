@@ -8,9 +8,6 @@
 import Foundation
 import MetalKit
 
-enum Fill {
-    case border, filled
-}
 
 internal typealias S4F = SIMD4<Float>
 

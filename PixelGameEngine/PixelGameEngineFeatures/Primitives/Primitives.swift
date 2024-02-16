@@ -7,5 +7,7 @@
 
 import Foundation
 
+enum Fill {
+    case border, filled
+}
 
-// DRAWING LINES

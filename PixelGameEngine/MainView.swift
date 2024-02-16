@@ -16,9 +16,8 @@ struct MainView: View {
         PixelGameEngineView(pixelsOnScreen: (width: 100, height: 100), mode: .auto(fps: 60)) { engine in
             engine.clear()
 
-            engine.drawTriangle(p1: Point(99, 99), p2: Point(50, 50), p3: Point(99, 50), color: RED, fill: .filled)
-            engine.drawTriangle(p1: Point(30, 90), p2: Point(90, 20), p3: Point(10, 10), color: GREEN, fill: .filled)
-            engine.drawTriangle(p1: Point(40, 10), p2: Point(10, 90), p3: Point(90, 10), color: BLUE, fill: .border)
+            engine.drawCircle(at: Point(20, 50), radius: 45, color: RED, fill: .filled)
+            
         }
         .frame(width: 600, height: 600)
     }
