@@ -9,15 +9,15 @@ import MetalKit
 import SwiftUI
 
 enum RefreshMode {
-    case auto(fps: Int), manual
+    case auto(fps: Int)
 }
 
 struct PixelGameEngineView: NSViewRepresentable {
-    let engine: PixelGameEngine
-    let mode: RefreshMode
+    private let engine: PixelGameEngine
+    private let mode: RefreshMode
 
-    let onCreate: (() -> Void)?
-    let onUpdate: (PixelGameEngine) -> Void
+    private let onCreate: (() -> Void)?
+    private let onUpdate: (PixelGameEngine) -> Void
 
     init(
         pixelsOnScreen: (width: Int, height: Int),
@@ -31,14 +31,14 @@ struct PixelGameEngineView: NSViewRepresentable {
         self.onUpdate = onUpdate
     }
 
-    func makeCoordinator() -> PixelRenderer {
-        return PixelRenderer(self, engine: engine, onUpdate: onUpdate)
+    func makeCoordinator() -> PixelViewCoordinator {
+        return PixelViewCoordinator(self, engine: engine, onUpdate: onUpdate)
     }
 
-    func makeNSView(context: Context) -> some NSView {
+    private func initMTKView(coordinator: MTKViewDelegate) -> MTKView {
         let mtkView = MTKView()
 
-        mtkView.delegate = context.coordinator
+        mtkView.delegate = coordinator
 
         mtkView.isPaused = false
 
@@ -53,10 +53,22 @@ struct PixelGameEngineView: NSViewRepresentable {
         case let .auto(fps: fps):
             mtkView.enableSetNeedsDisplay = false
             mtkView.preferredFramesPerSecond = fps
-        case .manual:
-            fatalError("not supported")
-            // TODO: drawing is not okay at all
         }
+
+        return mtkView
+    }
+
+    private func setupMouseTracking(for mtkView: MTKView) {
+        // TODO: tracking LMB and RMB
+        let options: NSTrackingArea.Options = [.mouseMoved, .mouseEnteredAndExited, .activeAlways, .inVisibleRect]
+        let trackingArea = NSTrackingArea(rect: .zero, options: options, owner: mtkView.delegate, userInfo: nil)
+        mtkView.addTrackingArea(trackingArea)
+    }
+
+    func makeNSView(context: Context) -> some NSView {
+        let mtkView = initMTKView(coordinator: context.coordinator)
+
+        setupMouseTracking(for: mtkView)
 
         onCreate?()
 
@@ -66,7 +78,7 @@ struct PixelGameEngineView: NSViewRepresentable {
     func updateNSView(_ nsView: NSViewType, context: Context) {}
 }
 
-class PixelRenderer: NSObject, MTKViewDelegate {
+class PixelViewCoordinator: NSResponder, MTKViewDelegate {
     struct Constants {
         var targetPixelsWidth: UInt16 = 0
         var targetPixelsHeight: UInt16 = 0
@@ -110,6 +122,10 @@ class PixelRenderer: NSObject, MTKViewDelegate {
         super.init()
     }
 
+    required init?(
+        coder: NSCoder) { fatalError("init(coder:) has not been implemented")
+    }
+
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {}
 
     func draw(in view: MTKView) {
@@ -149,5 +165,37 @@ class PixelRenderer: NSObject, MTKViewDelegate {
         computeCommandEncoder.endEncoding()
         commandBuffer.present(drawable)
         commandBuffer.commit()
+    }
+
+    // MARK: Mouse handling
+
+    override func mouseMoved(with event: NSEvent) {
+        // There must be an easier way...
+        let TITLE_HEIGHT: CGFloat = event.window?.hasTitleBar == true ? 28 : 0
+        if let minSize = event.window?.minSize, let frame = event.window?.frame {
+            let loc = event.locationInWindow
+
+            let isWidthSet = minSize.width != 0
+            let isHeightSet = minSize.height != TITLE_HEIGHT
+
+            let pixelGameFrameWidth = isWidthSet ? min(minSize.width, frame.width) : frame.width
+            let pixelGameFrameHeight = (isHeightSet ? min(minSize.height, frame.height) : frame.height) - TITLE_HEIGHT
+
+            let leftRightColWidth = (frame.width - minSize.width) / 2
+            let topBottomRowHeight = (frame.height - minSize.height) / 2
+
+            let xInPixelGameFrame: Double = loc.x - leftRightColWidth
+            let yInPixelGameFrame: Double = minSize.height + topBottomRowHeight - TITLE_HEIGHT - loc.y
+
+            let p = Point(
+                x: Int(xInPixelGameFrame / pixelGameFrameWidth * Double(engine.width)) + (isWidthSet ? 0 : engine.width / 2),
+                y: Int(yInPixelGameFrame / pixelGameFrameHeight * Double(engine.height)) + (isHeightSet ? 0 : engine.height / 2)
+            )
+            engine.setMousePosition(p: p)
+        }
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        engine.setMousePosition(p: nil)
     }
 }

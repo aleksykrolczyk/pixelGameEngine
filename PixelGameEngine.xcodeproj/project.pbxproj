@@ -16,6 +16,7 @@
 		3A2BABF22B7A7AE0007AE207 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BABF12B7A7AE0007AE207 /* Shaders.metal */; };
 		3A44D2702B7A848A004591E0 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44D26F2B7A848A004591E0 /* Types.swift */; };
 		3A44D2752B7B65A2004591E0 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44D2742B7B65A2004591E0 /* Primitives.swift */; };
+		3AC1BC872B7FC3740033B0EC /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC1BC862B7FC3740033B0EC /* Utils.swift */; };
 		3AEF72192B7BA9C600F3F4C6 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF72182B7BA9C600F3F4C6 /* Line.swift */; };
 		3AEF721B2B7BA9CE00F3F4C6 /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF721A2B7BA9CE00F3F4C6 /* Rectangle.swift */; };
 		3AEF721E2B7BA9E000F3F4C6 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF721D2B7BA9E000F3F4C6 /* Triangle.swift */; };
@@ -35,6 +36,7 @@
 		3A2BABF32B7A7AF5007AE207 /* PixelGameEngine_Bridging_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelGameEngine_Bridging_Header.h; sourceTree = "<group>"; };
 		3A44D26F2B7A848A004591E0 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		3A44D2742B7B65A2004591E0 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
+		3AC1BC862B7FC3740033B0EC /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3AEF72182B7BA9C600F3F4C6 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		3AEF721A2B7BA9CE00F3F4C6 /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
 		3AEF721D2B7BA9E000F3F4C6 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				3A44D26F2B7A848A004591E0 /* Types.swift */,
 				3A2BABED2B7A7AA9007AE207 /* PixelGameEngine.swift */,
 				3A2BABE02B7A7A8C007AE207 /* MainView.swift */,
+				3AC1BC862B7FC3740033B0EC /* Utils.swift */,
 			);
 			path = PixelGameEngine;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				3AEF721E2B7BA9E000F3F4C6 /* Triangle.swift in Sources */,
 				3A2BABF22B7A7AE0007AE207 /* Shaders.metal in Sources */,
 				3A44D2752B7B65A2004591E0 /* Primitives.swift in Sources */,
+				3AC1BC872B7FC3740033B0EC /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

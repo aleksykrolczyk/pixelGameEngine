@@ -8,7 +8,6 @@
 import Foundation
 import MetalKit
 
-
 internal typealias S4F = SIMD4<Float>
 
 internal extension S4F {
@@ -23,6 +22,8 @@ class PixelGameEngine {
     let height: Int
     let width: Int
 
+    private(set) var mousePosition: Point?
+
     init(_ width: Int, _ height: Int) {
         self.width = width
         self.height = height
@@ -31,10 +32,11 @@ class PixelGameEngine {
     }
 
     func isInBounds(p: Point) -> Bool {
-        if p.x < 0 || p.x > self.width - 1 || p.y < 0 || p.y > self.height - 1 {
-            return false
-        }
-        return true
+        return isInBounds(p.x, p.y)
+    }
+
+    func isInBounds(_ x: Int, _ y: Int) -> Bool {
+        return x > -1 && x < self.width && y > -1 && y < self.height
     }
 
     func clear() {
@@ -50,6 +52,10 @@ class PixelGameEngine {
     func drawPixel(color: S4F, x: Int, y: Int) {
         self[x, y] = Pixel(color: color)
     }
+
+    internal func setMousePosition(p: Point?) {
+        self.mousePosition = p
+    }
 }
 
 extension PixelGameEngine {
@@ -58,7 +64,9 @@ extension PixelGameEngine {
             frameBuffer[y * width + x]
         }
         set(newValue) {
-            frameBuffer[y * width + x] = newValue
+            if isInBounds(x, y) {
+                frameBuffer[y * width + x] = newValue
+            }
         }
     }
 
@@ -67,7 +75,9 @@ extension PixelGameEngine {
             frameBuffer[p.y * width + p.x]
         }
         set(newValue) {
-            frameBuffer[p.y * width + p.x] = newValue
+            if isInBounds(p: p) {
+                frameBuffer[p.y * width + p.x] = newValue
+            }
         }
     }
 }
