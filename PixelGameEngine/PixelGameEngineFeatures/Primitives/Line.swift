@@ -8,7 +8,7 @@
 import Foundation
 
 extension PixelGameEngine {
-    private func drawLineLow(_ x1: Int, _ y1: Int, _ x2: Int, _ y2: Int, pixel: Pixel) {
+    fileprivate func drawLineX(_ x1: Int, _ y1: Int, _ x2: Int, _ y2: Int, pixel: Pixel) {
         let dx = x2 - x1
         var dy = y2 - y1
 
@@ -29,7 +29,7 @@ extension PixelGameEngine {
         }
     }
 
-    private func drawLineHigh(_ x1: Int, _ y1: Int, _ x2: Int, _ y2: Int, pixel: Pixel) {
+    fileprivate func drawLineY(_ x1: Int, _ y1: Int, _ x2: Int, _ y2: Int, pixel: Pixel) {
         var dx = x2 - x1
         let dy = y2 - y1
 
@@ -73,15 +73,15 @@ extension PixelGameEngine {
         // Use Bresenham's Line Algorithm
         if abs(y2 - y1) < abs(x2 - x1) {
             if x1 > x2 {
-                drawLineLow(x2, y2, x1, y1, pixel: pixel)
+                drawLineX(x2, y2, x1, y1, pixel: pixel)
             } else {
-                drawLineLow(x1, y1, x2, y2, pixel: pixel)
+                drawLineX(x1, y1, x2, y2, pixel: pixel)
             }
         } else {
             if y1 > y2 {
-                drawLineHigh(x2, y2, x1, y1, pixel: pixel)
+                drawLineY(x2, y2, x1, y1, pixel: pixel)
             } else {
-                drawLineHigh(x1, y1, x2, y2, pixel: pixel)
+                drawLineY(x1, y1, x2, y2, pixel: pixel)
             }
         }
     }

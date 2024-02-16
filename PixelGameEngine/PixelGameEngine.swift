@@ -12,9 +12,9 @@ enum Fill {
     case border, filled
 }
 
-typealias S4F = SIMD4<Float>
+internal typealias S4F = SIMD4<Float>
 
-fileprivate extension S4F {
+internal extension S4F {
     var toPixel: Pixel {
         return Pixel(color: self)
     }
