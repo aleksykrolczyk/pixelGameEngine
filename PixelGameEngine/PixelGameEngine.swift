@@ -24,6 +24,8 @@ class PixelGameEngine {
 
     private(set) var mousePosition: Point?
 
+    private(set) var clickedButtons: Set<InputButton> = Set()
+
     init(_ width: Int, _ height: Int) {
         self.width = width
         self.height = height
@@ -31,34 +33,6 @@ class PixelGameEngine {
         self.frameBuffer = Array(repeating: Pixel(color: [0.0, 0.0, 0.0, 1.0]), count: width * height)
     }
 
-    func isInBounds(p: Point) -> Bool {
-        return isInBounds(p.x, p.y)
-    }
-
-    func isInBounds(_ x: Int, _ y: Int) -> Bool {
-        return x > -1 && x < self.width && y > -1 && y < self.height
-    }
-
-    func clear() {
-        frameBuffer.withUnsafeMutableBytes { pointer in
-            bzero(pointer.baseAddress, MemoryLayout<S4F>.stride * height * width)
-        }
-    }
-
-    func drawPixel(color: S4F, at point: Point) {
-        self[point] = Pixel(color: color)
-    }
-
-    func drawPixel(color: S4F, x: Int, y: Int) {
-        self[x, y] = Pixel(color: color)
-    }
-
-    internal func setMousePosition(p: Point?) {
-        self.mousePosition = p
-    }
-}
-
-extension PixelGameEngine {
     subscript(_ x: Int, _ y: Int) -> Pixel {
         get {
             frameBuffer[y * width + x]
@@ -79,5 +53,47 @@ extension PixelGameEngine {
                 frameBuffer[p.y * width + p.x] = newValue
             }
         }
+    }
+
+    func isInBounds(p: Point) -> Bool {
+        return isInBounds(p.x, p.y)
+    }
+
+    func isInBounds(_ x: Int, _ y: Int) -> Bool {
+        return x > -1 && x < self.width && y > -1 && y < self.height
+    }
+
+    func clear() {
+        frameBuffer.withUnsafeMutableBytes { pointer in
+            bzero(pointer.baseAddress, MemoryLayout<S4F>.stride * height * width)
+        }
+    }
+
+    func drawPixel(at point: Point, color: S4F) {
+        self[point] = Pixel(color: color)
+    }
+
+    func drawPixel(x: Int, y: Int, color: S4F) {
+        self[x, y] = Pixel(color: color)
+    }
+
+    func isButtonClicked(_ v: InputButton) -> Bool {
+        self.clickedButtons.contains(v)
+    }
+}
+
+// MARK: Input handling
+
+extension PixelGameEngine {
+    internal func setMousePosition(p: Point?) {
+        self.mousePosition = p
+    }
+
+    internal func setButtonClicked(_ v: InputButton) {
+        self.clickedButtons.insert(v)
+    }
+
+    internal func unsetButtonClicked(_ v: InputButton) {
+        self.clickedButtons.remove(v)
     }
 }
