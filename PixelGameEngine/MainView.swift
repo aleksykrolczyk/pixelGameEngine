@@ -17,12 +17,14 @@ struct MainView: View {
 
     var body: some View {
         // TODO: weird things happend if width != height
-        PixelGameEngineView(pixelsOnScreen: (width: 512, height: 512), mode: .auto(fps: 120)) { engine in
+        PixelGameEngineView(pixelsOnScreen: (width: 512, height: 512), preferredFPS: 60, name: "TestApp") { engine, dt in
+            print(dt)
+            
             if let pos = engine.mousePosition, engine.isButtonClicked(.leftMouseButton) == true {
                 if let previousPos = previousMousePos {
                     engine.drawLineSegment(from: previousPos, to: pos, color: WHITE)
                 } else {
-                    engine.drawPixel(at: pos, color: WHITE)
+                    engine.drawPixel(at: pos, color: GREEN)
                 }
                 previousMousePos = pos
             } else {
@@ -37,6 +39,6 @@ struct MainView: View {
     }
 }
 
-#Preview {
-    MainView()
-}
+//#Preview {
+//    MainView()
+//}

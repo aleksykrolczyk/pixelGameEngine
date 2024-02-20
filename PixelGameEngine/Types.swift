@@ -57,9 +57,9 @@ enum InputButton {
     case leftMouseButton, rightMouseButton, otherMouseButton
 
     // Modifier Keys
-    
+
     case capslock, shift, function, control, option
-    
+
     init(keyEventCode: UInt16) {
         self = switch keyEventCode {
         case 122: .f1

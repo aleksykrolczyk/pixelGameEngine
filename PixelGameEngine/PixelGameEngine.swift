@@ -17,20 +17,26 @@ internal extension S4F {
 }
 
 class PixelGameEngine {
-    var frameBuffer: [Pixel]
-
     let height: Int
     let width: Int
+    
+    private(set) var frameBuffer: [Pixel]
 
+    private let startTime: TimeInterval
+    
+    var elapsedTime: Double {
+        NSDate().timeIntervalSince1970 - startTime
+    }
+    private(set) var elapsedFrames: UInt64 = 0 // UInt64 roughly means that this engine crashes after about 584942417355 days of constant running - too bad!
+    
     private(set) var mousePosition: Point?
-
     private(set) var clickedButtons: Set<InputButton> = Set()
 
     init(_ width: Int, _ height: Int) {
         self.width = width
         self.height = height
-
         self.frameBuffer = Array(repeating: Pixel(color: [0.0, 0.0, 0.0, 1.0]), count: width * height)
+        self.startTime = NSDate().timeIntervalSince1970
     }
 
     subscript(_ x: Int, _ y: Int) -> Pixel {
@@ -82,7 +88,7 @@ class PixelGameEngine {
     }
 }
 
-// MARK: Input handling
+// MARK: Internal communication with the PixelGameEngineView
 
 extension PixelGameEngine {
     internal func setMousePosition(p: Point?) {
@@ -96,4 +102,9 @@ extension PixelGameEngine {
     internal func unsetButtonClicked(_ v: InputButton) {
         self.clickedButtons.remove(v)
     }
+    
+    internal func increaseFrameCount() {
+        elapsedFrames += 1
+    }
+    
 }

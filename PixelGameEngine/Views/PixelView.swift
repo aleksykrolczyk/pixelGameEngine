@@ -8,27 +8,41 @@
 import MetalKit
 import SwiftUI
 
-enum RefreshMode {
-    case auto(fps: Int)
+typealias OnUpdateFunc = (PixelGameEngine, Double) -> Void
+
+private class Metadata {
+    var appName: String
+    var lastFrameCount: UInt64
+
+    init(appname: String) {
+        self.appName = appname
+        self.lastFrameCount = 0
+    }
 }
 
 struct PixelGameEngineView: NSViewRepresentable {
+    private let meta: Metadata
+
     private let engine: PixelGameEngine
-    private let mode: RefreshMode
+    private let preferredFPS: Int
 
     private let onCreate: (() -> Void)?
-    private let onUpdate: (PixelGameEngine) -> Void
+    private let onUpdate: OnUpdateFunc
+
+    private var lastFrameCount: UInt64 = 0
 
     init(
         pixelsOnScreen: (width: Int, height: Int),
-        mode: RefreshMode,
+        preferredFPS: Int,
+        name appName: String = "Pixel Game Engine App",
         onCreate: (() -> Void)? = nil,
-        onUpdate: @escaping ((PixelGameEngine) -> Void)
+        onUpdate: @escaping OnUpdateFunc
     ) {
         self.engine = PixelGameEngine(pixelsOnScreen.width, pixelsOnScreen.height)
-        self.mode = mode
+        self.preferredFPS = preferredFPS
         self.onCreate = onCreate
         self.onUpdate = onUpdate
+        self.meta = Metadata(appname: appName)
     }
 
     func makeCoordinator() -> PixelViewCoordinator {
@@ -50,10 +64,13 @@ struct PixelGameEngineView: NSViewRepresentable {
         mtkView.framebufferOnly = false
         mtkView.drawableSize = mtkView.frame.size
 
-        switch mode {
-        case let .auto(fps: fps):
-            mtkView.enableSetNeedsDisplay = false
-            mtkView.preferredFramesPerSecond = fps
+        mtkView.enableSetNeedsDisplay = false
+        mtkView.preferredFramesPerSecond = preferredFPS
+
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            let newFramesCount = engine.elapsedFrames
+            mtkView.window?.title = "\(meta.appName) (FPS: \(newFramesCount - meta.lastFrameCount))"
+            meta.lastFrameCount = newFramesCount
         }
 
         return mtkView
@@ -76,7 +93,7 @@ struct PixelGameEngineView: NSViewRepresentable {
 
         return mtkView
     }
-    
+
     func updateNSView(_ nsView: NSViewType, context: Context) {}
 }
 
@@ -100,9 +117,11 @@ class PixelViewCoordinator: NSResponder, MTKViewDelegate {
     var constantsBuffer: MTLBuffer?
     var pixelsBuffer: MTLBuffer?
 
-    let onUpdate: (PixelGameEngine) -> Void
+    let onUpdate: OnUpdateFunc
 
-    init(_ parent: PixelGameEngineView, engine: PixelGameEngine, onUpdate: @escaping (PixelGameEngine) -> Void) {
+    private var lastUpdateTimestamp: TimeInterval
+
+    init(_ parent: PixelGameEngineView, engine: PixelGameEngine, onUpdate: @escaping OnUpdateFunc) {
         self.parent = parent
         self.engine = engine
         self.onUpdate = onUpdate
@@ -121,6 +140,8 @@ class PixelViewCoordinator: NSResponder, MTKViewDelegate {
 
         self.constants = Constants(targetPixelsWidth: UInt16(engine.width), targetPixelsHeight: UInt16(engine.height))
 
+        self.lastUpdateTimestamp = NSDate().timeIntervalSince1970
+
         super.init()
     }
 
@@ -138,7 +159,12 @@ class PixelViewCoordinator: NSResponder, MTKViewDelegate {
             return
         }
 
-        onUpdate(engine)
+        let newUpdateTimestamp = NSDate().timeIntervalSince1970
+        let diff = newUpdateTimestamp - lastUpdateTimestamp
+        lastUpdateTimestamp = newUpdateTimestamp
+        engine.increaseFrameCount()
+
+        onUpdate(engine, diff)
 
         pixelsBuffer = metalDevice.makeBuffer(bytes: engine.frameBuffer, length: MemoryLayout<SIMD4<Float>>.stride * engine.height * engine.width)!
         constantsBuffer = metalDevice.makeBuffer(bytes: &constants, length: MemoryLayout<Constants>.stride)!
