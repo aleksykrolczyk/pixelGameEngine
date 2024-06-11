@@ -64,7 +64,9 @@ extension PixelGameEngineNSView {
     }
 
     override func keyUp(with event: NSEvent) {
-        engine?.unsetButtonClicked(InputButton(keyEventCode: event.keyCode))
+        if let button = InputButton(keyEventCode: event.keyCode) {
+            engine?.unsetButtonClicked(button)
+        }
     }
 
     override func keyDown(with event: NSEvent) {
@@ -72,7 +74,10 @@ extension PixelGameEngineNSView {
         if event.modifierFlags.contains(.command) {
             return
         }
-        engine?.setButtonClicked(InputButton(keyEventCode: event.keyCode))
+        print(event.keyCode, InputButton(keyEventCode: event.keyCode))
+        if let button = InputButton(keyEventCode: event.keyCode) {
+            engine?.setButtonClicked(button)
+        }
     }
 
     override func flagsChanged(with event: NSEvent) {

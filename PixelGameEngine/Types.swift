@@ -60,8 +60,8 @@ enum InputButton {
 
     case capslock, shift, function, control, option
 
-    init(keyEventCode: UInt16) {
-        self = switch keyEventCode {
+    init?(keyEventCode: UInt16) {
+        let key: InputButton? = switch keyEventCode {
         case 122: .f1
         case 120: .f2
         case 099: .f3
@@ -140,7 +140,13 @@ enum InputButton {
         case 124, 119: .kArrowRight
         case 125, 121: .kArrowDown
 
-        default: fatalError("keycode \(keyEventCode) not recognized")
+        default: nil
+        }
+        
+        if let key {
+            self = key
+        } else {
+            return nil
         }
     }
 }

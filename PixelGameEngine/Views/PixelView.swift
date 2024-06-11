@@ -26,7 +26,7 @@ struct PixelGameEngineView: NSViewRepresentable {
     private let engine: PixelGameEngine
     private let preferredFPS: Int
 
-    private let onCreate: (() -> Void)?
+    private let onCreate: ((PixelGameEngine) -> Void)?
     private let onUpdate: OnUpdateFunc
 
     private var lastFrameCount: UInt64 = 0
@@ -35,7 +35,7 @@ struct PixelGameEngineView: NSViewRepresentable {
         pixelsOnScreen: (width: Int, height: Int),
         preferredFPS: Int,
         name appName: String = "Pixel Game Engine App",
-        onCreate: (() -> Void)? = nil,
+        onCreate: ((PixelGameEngine) -> Void)? = nil,
         onUpdate: @escaping OnUpdateFunc
     ) {
         self.engine = PixelGameEngine(pixelsOnScreen.width, pixelsOnScreen.height)
@@ -43,6 +43,8 @@ struct PixelGameEngineView: NSViewRepresentable {
         self.onCreate = onCreate
         self.onUpdate = onUpdate
         self.meta = Metadata(appname: appName)
+    
+        onCreate?(engine)
     }
 
     func makeCoordinator() -> PixelViewCoordinator {
@@ -86,11 +88,7 @@ struct PixelGameEngineView: NSViewRepresentable {
 
     func makeNSView(context: Context) -> some NSView {
         let mtkView = initMTKView(coordinator: context.coordinator)
-
         setupMouseTracking(for: mtkView)
-
-        onCreate?()
-
         return mtkView
     }
 

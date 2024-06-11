@@ -10,7 +10,6 @@
 		3A2BABDF2B7A7A8C007AE207 /* PixelGameEngineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BABDE2B7A7A8C007AE207 /* PixelGameEngineApp.swift */; };
 		3A2BABE12B7A7A8C007AE207 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BABE02B7A7A8C007AE207 /* MainView.swift */; };
 		3A2BABE32B7A7A8D007AE207 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BABE22B7A7A8D007AE207 /* Assets.xcassets */; };
-		3A2BABE62B7A7A8D007AE207 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A2BABE52B7A7A8D007AE207 /* Preview Assets.xcassets */; };
 		3A2BABEE2B7A7AA9007AE207 /* PixelGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BABED2B7A7AA9007AE207 /* PixelGameEngine.swift */; };
 		3A2BABF02B7A7ABC007AE207 /* PixelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BABEF2B7A7ABC007AE207 /* PixelView.swift */; };
 		3A2BABF22B7A7AE0007AE207 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 3A2BABF12B7A7AE0007AE207 /* Shaders.metal */; };
@@ -18,6 +17,7 @@
 		3A44D2752B7B65A2004591E0 /* Primitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A44D2742B7B65A2004591E0 /* Primitives.swift */; };
 		3AC1BC872B7FC3740033B0EC /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC1BC862B7FC3740033B0EC /* Utils.swift */; };
 		3AC1BC8A2B8345760033B0EC /* PixelGameEngineNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC1BC892B8345760033B0EC /* PixelGameEngineNSView.swift */; };
+		3AE1F03C2B84E0EF00FC59DE /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE1F03B2B84E0EF00FC59DE /* Text.swift */; };
 		3AEF72192B7BA9C600F3F4C6 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF72182B7BA9C600F3F4C6 /* Line.swift */; };
 		3AEF721B2B7BA9CE00F3F4C6 /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF721A2B7BA9CE00F3F4C6 /* Rectangle.swift */; };
 		3AEF721E2B7BA9E000F3F4C6 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEF721D2B7BA9E000F3F4C6 /* Triangle.swift */; };
@@ -28,8 +28,7 @@
 		3A2BABDB2B7A7A8C007AE207 /* PixelGameEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixelGameEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A2BABDE2B7A7A8C007AE207 /* PixelGameEngineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelGameEngineApp.swift; sourceTree = "<group>"; };
 		3A2BABE02B7A7A8C007AE207 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		3A2BABE22B7A7A8D007AE207 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3A2BABE52B7A7A8D007AE207 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3A2BABE22B7A7A8D007AE207 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = PixelGameEngine/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		3A2BABE72B7A7A8D007AE207 /* PixelGameEngine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PixelGameEngine.entitlements; sourceTree = "<group>"; };
 		3A2BABED2B7A7AA9007AE207 /* PixelGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelGameEngine.swift; sourceTree = "<group>"; };
 		3A2BABEF2B7A7ABC007AE207 /* PixelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelView.swift; sourceTree = "<group>"; };
@@ -39,6 +38,7 @@
 		3A44D2742B7B65A2004591E0 /* Primitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Primitives.swift; sourceTree = "<group>"; };
 		3AC1BC862B7FC3740033B0EC /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3AC1BC892B8345760033B0EC /* PixelGameEngineNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelGameEngineNSView.swift; sourceTree = "<group>"; };
+		3AE1F03B2B84E0EF00FC59DE /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		3AEF72182B7BA9C600F3F4C6 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		3AEF721A2B7BA9CE00F3F4C6 /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rectangle.swift; sourceTree = "<group>"; };
 		3AEF721D2B7BA9E000F3F4C6 /* Triangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -75,7 +75,8 @@
 		3A2BABDD2B7A7A8C007AE207 /* PixelGameEngine */ = {
 			isa = PBXGroup;
 			children = (
-				3A44D26E2B7A7B8B004591E0 /* Other */,
+				3A2BABE72B7A7A8D007AE207 /* PixelGameEngine.entitlements */,
+				3A2BABE22B7A7A8D007AE207 /* Assets.xcassets */,
 				3A44D2732B7B6586004591E0 /* PixelGameEngineFeatures */,
 				3AC1BC882B8345480033B0EC /* Views */,
 				3A2BABDE2B7A7A8C007AE207 /* PixelGameEngineApp.swift */,
@@ -83,34 +84,17 @@
 				3A2BABF32B7A7AF5007AE207 /* PixelGameEngine_Bridging_Header.h */,
 				3A44D26F2B7A848A004591E0 /* Types.swift */,
 				3A2BABED2B7A7AA9007AE207 /* PixelGameEngine.swift */,
-				3A2BABE02B7A7A8C007AE207 /* MainView.swift */,
 				3AC1BC862B7FC3740033B0EC /* Utils.swift */,
+				3A2BABE02B7A7A8C007AE207 /* MainView.swift */,
 			);
 			path = PixelGameEngine;
-			sourceTree = "<group>";
-		};
-		3A2BABE42B7A7A8D007AE207 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				3A2BABE52B7A7A8D007AE207 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		3A44D26E2B7A7B8B004591E0 /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				3A2BABE42B7A7A8D007AE207 /* Preview Content */,
-				3A2BABE22B7A7A8D007AE207 /* Assets.xcassets */,
-				3A2BABE72B7A7A8D007AE207 /* PixelGameEngine.entitlements */,
-			);
-			name = Other;
 			sourceTree = "<group>";
 		};
 		3A44D2732B7B6586004591E0 /* PixelGameEngineFeatures */ = {
 			isa = PBXGroup;
 			children = (
 				3AEF72172B7BA9BA00F3F4C6 /* Primitives */,
+				3AE1F03B2B84E0EF00FC59DE /* Text.swift */,
 			);
 			path = PixelGameEngineFeatures;
 			sourceTree = "<group>";
@@ -194,7 +178,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A2BABE62B7A7A8D007AE207 /* Preview Assets.xcassets in Resources */,
 				3A2BABE32B7A7A8D007AE207 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +199,7 @@
 				3AEF72212B7BA9F000F3F4C6 /* Circle.swift in Sources */,
 				3A2BABF02B7A7ABC007AE207 /* PixelView.swift in Sources */,
 				3AEF721E2B7BA9E000F3F4C6 /* Triangle.swift in Sources */,
+				3AE1F03C2B84E0EF00FC59DE /* Text.swift in Sources */,
 				3A2BABF22B7A7AE0007AE207 /* Shaders.metal in Sources */,
 				3A44D2752B7B65A2004591E0 /* Primitives.swift in Sources */,
 				3AC1BC872B7FC3740033B0EC /* Utils.swift in Sources */,
